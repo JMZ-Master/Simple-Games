@@ -6,6 +6,9 @@ public class Main {
         int win = 3;
 
         Game game = new Game(size, win);
+        boolean start = game.WhoStarts(); // true: you start, false: opponent starts
+
+
 
     }
 

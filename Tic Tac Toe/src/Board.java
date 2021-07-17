@@ -81,4 +81,20 @@ public class Board {
 
     }
 
+    public void updateBoard(int player, int row, int col) {
+        /* Tries to update the board with the desired move.
+         */
+
+        if (row >= 0 && row < size && col >= 0 && col < size) {
+            // location within the board
+            if (grid[row][col] == -1) {
+                // unoccupied space
+                grid[row][col] = player;
+            }
+        }
+    }
+
+    public int[][] getGrid() {
+        return grid;
+    }
 }
