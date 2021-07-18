@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Game {
@@ -22,7 +24,7 @@ public class Game {
         Scanner reader = new Scanner(System.in);
 
         while (!done) {
-            System.out.printf("Heads(1) or Tails(0)?\n");
+            System.out.print("Heads(1) or Tails(0)?\n");
             guess = reader.nextInt();
             if (guess == 1 || guess == 0) {
                 done = true;
@@ -30,12 +32,12 @@ public class Game {
         }
 
         if (guess == start) {
-            System.out.printf("Correct, you start!\n");
+            System.out.print("Correct, you start!\n");
             return true;
         }
         else
         {
-            System.out.printf("Incorrect, opponent starts!\n");
+            System.out.print("Incorrect, opponent starts!\n");
             return false;
         }
 
@@ -48,11 +50,7 @@ public class Game {
         board.updateBoard(player, row, col);
         int[][] nextBoard = board.getGrid();
 
-        if (prevBoard[row][col] == nextBoard[row][col]) {
-            return false;
-        } else {
-            return true;
-        }
+        return prevBoard[row][col] != nextBoard[row][col];
     }
 
     public void askMove(int player) {
@@ -64,6 +62,101 @@ public class Game {
             System.out.println("Enter column number: ");
             col = reader.nextInt();
         }
+    }
+
+    public boolean checkWin(int player) {
+        /* Returns true if the player wins else false.
+         */
+        int[][] grid = board.getGrid();
+        int[][] square;
+        /* Winning chain is comprised of identical moves linked in
+         * vertical, horizontal or diagonal direction
+         * on the board. It needs to be 'winLength'
+         * (e.g. 3) long for the player to win.
+         *
+         * Any nxn grid has 2(n+1) winning chains
+         * and any mxm board has (m-n+1)^2 of these grids.
+         * e.g. playing to win for 3 on a 4x4 board
+         * means 4*8 = 32 possible ways to win.
+        */
+        for (int i = 0; i < board.size - winLength + 1; i++) {
+            for (int j = 0; j < board.size - winLength + 1; j++) {
+                // each subgrid has 2(winLength + 1) ways to win
+                square = subGrid(grid, i, j, winLength);
+                if (winChains(square, winLength, player)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private int[][] subGrid(int[][] grid, int row, int col, int size) {
+        int[][] square = new int[size][size];
+
+        for (int i = 0; i < size; i++) {
+            System.arraycopy(grid[row + i], col, square[i], 0, size);
+        }
+
+        return square;
+    }
+
+    private boolean winChains(int[][] square, int size, int play) {
+        int j;
+
+        // checking each row
+        for (int i = 0; i < size; i++) {
+            j = 0;
+            while(square[i][j] == play && j < size) {
+                j = j + 1;
+                if (j == size) {
+                    return true;
+                }
+            }
+        }
+
+        // checking each column
+        for (int i = 0; i < size; i++) {
+            j = 0;
+            while(square[j][i] == play && j < size) {
+                j = j + 1;
+                if (j == size) {
+                    return true;
+                }
+            }
+        }
+
+        // checking the two diagonals
+        j = 0;
+        while(square[j][j] == play && j < size) {
+            j = j + 1;
+            if (j == size) {
+                return true;
+            }
+        }
+        j = 0;
+        while(square[j][size-1-j] == play && j < size) {
+            j = j + 1;
+            if (j == size) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean checkDraw() {
+        for (int i = 0; i < board.size; i++) {
+            for (int j = 0; j < board.size;j++) {
+                if (board.grid[i][j] == -1) {
+                    // unoccupied
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
 }

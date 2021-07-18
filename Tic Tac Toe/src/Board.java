@@ -2,6 +2,7 @@ public class Board {
 
     int size;
     static int max = 10;
+    static final int p1 = 1, p2 = 0;
     int[][] grid;
 
     public Board(int size) {
@@ -47,9 +48,9 @@ public class Board {
             System.out.printf("%d", i); // row number
             for (int j = 0; j < size; j++) {
                 // printing each row
-                if (grid[i][j] == 0) {
+                if (grid[i][j] == p2) {
                     System.out.printf(" O ");
-                } else if (grid[i][j] == 1) {
+                } else if (grid[i][j] == p1) {
                     System.out.printf(" X ");
                 } else {
                     System.out.printf("   ");

@@ -4,6 +4,7 @@ public class Main {
         // Tic Tac Toe game
         int size = 3;
         int win = 3;
+        boolean gameOver = false;
 
         Game game = new Game(size, win);
         boolean start = game.WhoStarts(); // true: you start, false: opponent starts
