@@ -1,11 +1,10 @@
 public class Board {
 
-    int size;
+    int size, p1, p2;
     static int max = 10;
-    static final int p1 = 1, p2 = 0;
     int[][] grid;
 
-    public Board(int size) {
+    public Board(int size, int p1, int p2) {
         /* size must be at least 3 and
          * a maximum of 10
          */
@@ -16,6 +15,8 @@ public class Board {
         } else {
             this.size = size;
         }
+        this.p1 = p1;
+        this.p2 = p2;
 
         grid = new int[this.size][this.size];
         createBoard();
@@ -42,37 +43,37 @@ public class Board {
         for (int i = 0; i < size; i++) {
             System.out.printf("  %d ",i);
         }
-        System.out.printf("\n");
+        System.out.print("\n");
 
         for (int i = 0; i < size; i++) {
             System.out.printf("%d", i); // row number
             for (int j = 0; j < size; j++) {
                 // printing each row
                 if (grid[i][j] == p2) {
-                    System.out.printf(" O ");
+                    System.out.print(" O ");
                 } else if (grid[i][j] == p1) {
-                    System.out.printf(" X ");
+                    System.out.print(" X ");
                 } else {
-                    System.out.printf("   ");
+                    System.out.print("   ");
                 }
 
                 if (j < size - 1) {
-                    System.out.printf("|");
+                    System.out.print("|");
                 } else {
-                    System.out.printf("\n");
+                    System.out.print("\n");
                 }
             }
             // column below for -+-+-
             if (i < size - 1) {
                 for (int j = 0; j < size; j++) {
                     if (j == 0) {
-                        System.out.printf(" ");
+                        System.out.print(" ");
                     } else {
-                        System.out.printf("+");
+                        System.out.print("+");
                     }
-                    System.out.printf("---");
+                    System.out.print("---");
                     if (j == size - 1) {
-                        System.out.printf("\n");
+                        System.out.print("\n");
                     }
                 }
             }
@@ -83,16 +84,18 @@ public class Board {
     }
 
     public void updateBoard(int player, int row, int col) {
-        /* Tries to update the board with the desired move.
+        /* Updates the board with the desired move.
          */
 
-        if (row >= 0 && row < size && col >= 0 && col < size) {
-            // location within the board
-            if (grid[row][col] == -1) {
-                // unoccupied space
-                grid[row][col] = player;
-            }
-        }
+//        if (row >= 0 && row < size && col >= 0 && col < size) {
+//            // location within the board
+//            if (grid[row][col] == -1) {
+//                // unoccupied space
+//                grid[row][col] = player;
+//            }
+//        }
+        grid[row][col] = player;
+
     }
 
     public int[][] getGrid() {

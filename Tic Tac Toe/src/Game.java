@@ -1,20 +1,30 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Game {
 
     private Board board;
     int winLength;
+    static final int p1 = 1, p2 = 0;
 
     public Game(int size, int winLength) {
-        board = new Board(size);
+        board = new Board(size, p1, p2);
         this.winLength = winLength;
 
-        board.displayBoard();
     }
 
-    public boolean WhoStarts() {
+    public Board getBoard() {
+        return board;
+    }
+
+    public static int getP1() {
+        return p1;
+    }
+
+    public static int getP2() {
+        return p2;
+    }
+
+    public int whoStarts() {
         //returns true if guesses correctly
         int guess = -1, start;
         boolean done = false;
@@ -33,35 +43,54 @@ public class Game {
 
         if (guess == start) {
             System.out.print("Correct, you start!\n");
-            return true;
+            return p1;
         }
         else
         {
             System.out.print("Incorrect, opponent starts!\n");
-            return false;
+            return p2;
         }
 
     }
 
-    private boolean checkMove(int player, int row, int col) {
-        // returns true if update is successful
-
-        int[][] prevBoard = board.getGrid();
-        board.updateBoard(player, row, col);
-        int[][] nextBoard = board.getGrid();
-
-        return prevBoard[row][col] != nextBoard[row][col];
-    }
+//    private boolean checkMove(int player, int row, int col) {
+//        // returns true if update is successful
+//
+//        int[][] prevBoard = board.getGrid();
+//        board.updateBoard(player, row, col);
+//        board.displayBoard();
+//        int[][] nextBoard = board.getGrid();
+//
+//        return prevBoard[row][col] != nextBoard[row][col];
+//    }
 
     public void askMove(int player) {
-        int row = -1, col = -1;
+        int row, col;
+        boolean done = false;
         Scanner reader = new Scanner(System.in);
-        while (!this.checkMove(player, row, col)) {
-            System.out.println("Enter row number: ");
-            row = reader.nextInt();
-            System.out.println("Enter column number: ");
-            col = reader.nextInt();
+
+        System.out.print("Enter row number: ");
+        row = reader.nextInt();
+        System.out.print("Enter column number: ");
+        col = reader.nextInt();
+
+        while (!done) {
+            if (row >= 0 && row < board.size && col >= 0 && col < board.size) {
+            // location within the board
+                if (board.getGrid()[row][col] == -1) {
+                    done = true;
+                }
+            }
+            if (!done){
+                System.out.print("Enter row number: ");
+                row = reader.nextInt();
+                System.out.print("Enter column number: ");
+                col = reader.nextInt();
+            }
+
         }
+
+        board.updateBoard(player, row, col);
     }
 
     public boolean checkWin(int player) {
