@@ -4,24 +4,15 @@ public class Game {
 
     private Board board;
     int winLength;
-    static final int p1 = 1, p2 = 0;
 
-    public Game(int size, int winLength) {
-        board = new Board(size, p1, p2);
+    public Game(Board board, int winLength) {
+        this.board = board;
         this.winLength = winLength;
 
     }
 
     public Board getBoard() {
         return board;
-    }
-
-    public static int getP1() {
-        return p1;
-    }
-
-    public static int getP2() {
-        return p2;
     }
 
     public int whoStarts() {
@@ -43,26 +34,15 @@ public class Game {
 
         if (guess == start) {
             System.out.print("Correct, you start!\n");
-            return p1;
+            return Board.p1;
         }
         else
         {
             System.out.print("Incorrect, opponent starts!\n");
-            return p2;
+            return Board.p2;
         }
 
     }
-
-//    private boolean checkMove(int player, int row, int col) {
-//        // returns true if update is successful
-//
-//        int[][] prevBoard = board.getGrid();
-//        board.updateBoard(player, row, col);
-//        board.displayBoard();
-//        int[][] nextBoard = board.getGrid();
-//
-//        return prevBoard[row][col] != nextBoard[row][col];
-//    }
 
     public void askMove(int player) {
         int row, col;

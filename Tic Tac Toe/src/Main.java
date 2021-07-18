@@ -5,10 +5,12 @@ public class Main {
         int size = 3;
         int win = 3;
         boolean gameOver = false;
-        int p1 = Game.getP1();
-        int p2 = Game.getP2();
+        int p1 = Board.getP1();
+        int p2 = Board.getP2();
 
-        Game game = new Game(size, win);
+        Board board = new Board(size);
+
+        Game game = new Game(board, win);
         game.getBoard().displayBoard();
         int start = game.whoStarts();
 

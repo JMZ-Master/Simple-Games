@@ -1,10 +1,11 @@
 public class Board {
 
-    int size, p1, p2;
+    int size;
     static int max = 10;
     int[][] grid;
+    static final int p1 = 1, p2 = 0;
 
-    public Board(int size, int p1, int p2) {
+    public Board(int size) {
         /* size must be at least 3 and
          * a maximum of 10
          */
@@ -15,12 +16,18 @@ public class Board {
         } else {
             this.size = size;
         }
-        this.p1 = p1;
-        this.p2 = p2;
 
         grid = new int[this.size][this.size];
         createBoard();
 
+    }
+
+    public static int getP1() {
+        return p1;
+    }
+
+    public static int getP2() {
+        return p2;
     }
 
     private void createBoard() {
